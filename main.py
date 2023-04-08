@@ -113,6 +113,15 @@ def combine_answers(answers, research_question, use_gpt4=False, temperature=0.1,
 
     return literature_review
 
+# Extract bibliographical citations from answers
+def extract_citations(answers):
+    citations = []
+    for answer in answers:
+        citation_start = answer.rfind("SOURCE: ")
+        if citation_start != -1:
+            citation = answer[citation_start + len("SOURCE: "):]
+            citations.append(citation)
+    return citations
 
 # Set your research question here
 research_question = "AI impact on the economy"
@@ -135,6 +144,11 @@ print(colored("Answers and study qualities extracted!", "green"))
 print(colored("Synthesizing answers...", "yellow"))
 literature_review = combine_answers(answers, research_question)
 print(colored("Literature review generated!", "green"))
+
+# Extract citations from answers and append a references list to the literature review
+citations = extract_citations(answers)
+references_list = "\n".join([f"{idx + 1}. {citation}" for idx, citation in enumerate(citations)])
+literature_review += "\n\nReferences:\n" + references_list
 
 # Print the academic literature review
 print(colored("Academic Literature Review:", "cyan"), literature_review, "\n")
