@@ -26,10 +26,11 @@ On Windows, use `venv\Scripts\activate` instead of `source venv/bin/activate`.
 pip install -r requirements.txt
 ```
 
-4. Create a .env file in the project directory and add your OpenAI API key:
+4. Create a .env file in the project directory and add your OpenAI API key and an email of your choice (used to identify your API requests for getting citations):
 
 ```bash
 OPENAI_API_KEY=<your_openai_api_key>
+EMAIL=<your_email>
 ```
 
 Replace <your_openai_api_key> with your actual API key from OpenAI.

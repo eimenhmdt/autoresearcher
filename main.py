@@ -10,11 +10,14 @@ load_dotenv()
 
 # Set API Keys
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+EMAIL = os.getenv("EMAIL", "")
 assert OPENAI_API_KEY, "OPENAI_API_KEY environment variable is missing from .env"
+assert EMAIL, "EMAIL environment variable is missing from .env"
 
-# Configure OpenAI and Pinecone
+# Configure OpenAI
 openai.api_key = OPENAI_API_KEY
 
+# Fetch papers from Semantic Scholar API
 def fetch_papers(search_query, limit=100, year_range=None):
     base_url = "https://api.semanticscholar.org/graph/v1/paper/search"
     params = {
@@ -34,12 +37,14 @@ def fetch_papers(search_query, limit=100, year_range=None):
     else:
         raise Exception(f"Failed to fetch data from Semantic Scholar API: {response.status_code}")
 
-
-def fetch_and_sort_papers(search_query, limit=100, top_n=20, year_range="2010-2023"):
+# Fetch and sort papers by citation count
+# If you don't want to limit the year range, set year_range to None
+def fetch_and_sort_papers(search_query, limit=100, top_n=20, year_range="2000-2023"):
     papers = fetch_papers(search_query, limit, year_range)
     sorted_papers = sorted(papers, key=lambda x: x['citationCount'], reverse=True)
     return sorted_papers[:top_n]
 
+# Call OpenAI API with a given prompt (GPT-3.5 turbo or GPT-4)
 def openai_call(prompt: str, use_gpt4: bool = False, temperature: float = 0.5, max_tokens: int = 100):
     if not use_gpt4:
         #Call GPT-3.5 turbo model
@@ -68,7 +73,7 @@ def openai_call(prompt: str, use_gpt4: bool = False, temperature: float = 0.5, m
         return response.choices[0].message.content.strip()
 
 
-
+# Extract answers from papers using OpenAI API
 def extract_answers_from_papers(papers, research_question, use_gpt4=False, temperature=0.1, max_tokens=150):
     answers = []
     default_answer = "No answer found."
@@ -93,12 +98,14 @@ def extract_answers_from_papers(papers, research_question, use_gpt4=False, tempe
 
     return answers
 
+# Get APA citation for a paper using DOI
 def get_citation_by_doi(doi):
-    url = f"https://api.citeas.org/product/{doi}?email=eimen@aietal.com"
+    url = f"https://api.citeas.org/product/{doi}?email={EMAIL}"
     response = requests.get(url)
     data = response.json()
     return data["citations"][0]["citation"]
 
+# Combine answers into a concise literature review using OpenAI API
 def combine_answers(answers, research_question, use_gpt4=False, temperature=0.1, max_tokens=1800):
     answer_list = "\n\n".join(answers)
     prompt = literature_review_prompt.format(research_question=research_question, answer_list=answer_list)
@@ -107,7 +114,7 @@ def combine_answers(answers, research_question, use_gpt4=False, temperature=0.1,
     return literature_review
 
 
-# Set your research question and API key
+# Set your research question here
 research_question = "AI impact on the economy"
 
 print(colored(f"Research question: {research_question}", "yellow", attrs=["bold", "blink"]))
