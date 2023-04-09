@@ -39,3 +39,21 @@ If the answer is not in the abstract, then you are only allowed to respond with 
 This is the abstract: {abstract}
 """
 
+keyword_combination_prompt = """
+`reset`
+`no quotes`
+`no explanations`
+`no prompt`
+`no self-reference`
+`no apologies`
+`no filler`
+`just answer`
+
+Generate several keyword combinations based on the following research question: {research_question}. 
+Don't generate more than 10 keyword combinations.
+
+The output should be structured like this:
+Write "KeywordCombination:" and then list the keywords like so "Keyword+Keyword+Keyword"
+
+Important note: If one keyword consists of multiple words, then use a plus sign to separate the words like so: "economic+growth+artificial+intelligence"
+"""

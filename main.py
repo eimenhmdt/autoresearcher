@@ -4,7 +4,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from termcolor import colored
-from prompts import literature_review_prompt, extract_answer_prompt
+from prompts import literature_review_prompt, extract_answer_prompt, keyword_combination_prompt
 
 load_dotenv()
 
@@ -16,6 +16,16 @@ assert EMAIL, "EMAIL environment variable is missing from .env"
 
 # Configure OpenAI
 openai.api_key = OPENAI_API_KEY
+
+# Generate keyword combinations for a given research question
+def generate_keyword_combinations(research_question):
+    prompt = keyword_combination_prompt.format(research_question=research_question)
+    response = openai_call(prompt)
+    combinations = response.split("\n")
+    
+    # Extract keyword combinations and handle cases where there's no colon
+    return [combination.split(": ")[1] for combination in combinations if ": " in combination]
+
 
 # Fetch papers from Semantic Scholar API
 def fetch_papers(search_query, limit=100, year_range=None):
@@ -33,16 +43,24 @@ def fetch_papers(search_query, limit=100, year_range=None):
 
     if response.status_code == 200:
         data = response.json()
-        return data['data']
+        return data.get('data', [])
     else:
         raise Exception(f"Failed to fetch data from Semantic Scholar API: {response.status_code}")
 
+
 # Fetch and sort papers by citation count
 # If you don't want to limit the year range, set year_range to None
-def fetch_and_sort_papers(search_query, limit=100, top_n=20, year_range="2000-2023"):
-    papers = fetch_papers(search_query, limit, year_range)
+def fetch_and_sort_papers(search_query, limit=100, top_n=20, year_range="2010-2023", keyword_combinations=None):
+    papers = []
+    if keyword_combinations is None:
+        keyword_combinations = [search_query]
+
+    for combination in keyword_combinations:
+        papers.extend(fetch_papers(combination, limit, year_range))
+
     sorted_papers = sorted(papers, key=lambda x: x['citationCount'], reverse=True)
     return sorted_papers[:top_n]
+
 
 # Call OpenAI API with a given prompt (GPT-3.5 turbo or GPT-4)
 def openai_call(prompt: str, use_gpt4: bool = False, temperature: float = 0.5, max_tokens: int = 100):
@@ -124,21 +142,27 @@ def extract_citations(answers):
     return citations
 
 # Set your research question here
-research_question = "AI impact on the economy"
+research_question = "What is the impact of AI on the economy?"
 
 print(colored(f"Research question: {research_question}", "yellow", attrs=["bold", "blink"]))
 print(colored("Auto Researcher initiated!", "yellow"))
 
+# Generate keyword combinations
+print(colored("Generating keyword combinations...", "yellow"))
+keyword_combinations = generate_keyword_combinations(research_question)
+print(colored("Keyword combinations generated!", "green"))
+print(keyword_combinations)
+
 # Fetch the top 20 papers for the research question
-print(colored("Fetching top 20 papers...", "yellow"))
 search_query = research_question
-top_papers = fetch_and_sort_papers(search_query)
+print(colored("Fetching top 20 papers...", "yellow"))
+top_papers = fetch_and_sort_papers(search_query, keyword_combinations=keyword_combinations)
 print(colored("Top 20 papers fetched!", "green"))
 
 # Extract answers and from the top 20 papers
-print(colored("Extracting answers and study qualities from papers...", "yellow"))
+print(colored("Extracting research findings from papers...", "yellow"))
 answers = extract_answers_from_papers(top_papers, research_question)
-print(colored("Answers and study qualities extracted!", "green"))
+print(colored("Research findings extracted!", "green"))
 
 # Combine answers into a concise academic literature review
 print(colored("Synthesizing answers...", "yellow"))
@@ -149,6 +173,10 @@ print(colored("Literature review generated!", "green"))
 citations = extract_citations(answers)
 references_list = "\n".join([f"{idx + 1}. {citation}" for idx, citation in enumerate(citations)])
 literature_review += "\n\nReferences:\n" + references_list
+
+# Append the keyword combinations to the literature review
+literature_review += "\n\nKeyword combinations used to search for papers: "
+literature_review += ", ".join([f"{i+1}. {combination}" for i, combination in enumerate(keyword_combinations)])
 
 # Print the academic literature review
 print(colored("Academic Literature Review:", "cyan"), literature_review, "\n")
