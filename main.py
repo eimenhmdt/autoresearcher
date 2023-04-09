@@ -20,9 +20,8 @@ openai.api_key = OPENAI_API_KEY
 # Generate keyword combinations for a given research question
 def generate_keyword_combinations(research_question):
     prompt = keyword_combination_prompt.format(research_question=research_question)
-    response = openai_call(prompt)
+    response = openai_call(prompt, use_gpt4=False, temperature=0, max_tokens=200)
     combinations = response.split("\n")
-    
     # Extract keyword combinations and handle cases where there's no colon
     return [combination.split(": ")[1] for combination in combinations if ": " in combination]
 
@@ -103,11 +102,10 @@ def extract_answers_from_papers(papers, research_question, use_gpt4=False, tempe
             citation = get_citation_by_doi(paper["externalIds"]["DOI"])
         else:
             citation = paper["url"]
-
         prompt = extract_answer_prompt.format(research_question=research_question, abstract=abstract)
         answer = openai_call(prompt, use_gpt4=use_gpt4, temperature=temperature, max_tokens=max_tokens)
-
-        answer_with_citation = f"{answer} {citation}"
+        
+        answer_with_citation = f"{answer}\n{citation}"
         if answer != default_answer:
             answer_with_citation = f"{answer} SOURCE: {citation}"
             answers.append(answer_with_citation)

@@ -50,10 +50,11 @@ keyword_combination_prompt = """
 `just answer`
 
 Generate several keyword combinations based on the following research question: {research_question}. 
-Don't generate more than 10 keyword combinations.
+Don't generate more than 5 keyword combinations.
 
 The output should be structured like this:
-Write "KeywordCombination:" and then list the keywords like so "Keyword+Keyword+Keyword"
+Write "KeywordCombination:" and then list the keywords like so "Keyword Keyword Keyword"
 
-Important note: If one keyword consists of multiple words, then use a plus sign to separate the words like so: "economic+growth+artificial+intelligence"
+Important note: Don't add commas between the keywords. Only add spaces.
+
 """
