@@ -52,7 +52,7 @@ Replace <your_research_question> with your desired research question.
 2. Run the script with your research question as a command-line argument:
 
 ```bash
-python auto_researcher.py "<your_research_question>"
+python main.py "<your_research_question>"
 ```
 
 Replace <your_research_question> with your desired research question. If no argument is provided, the script will use the default research question.
