@@ -1,5 +1,7 @@
 # AutoResearcher
 
+[![Discord](https://img.shields.io/discord/123456789012345678?label=AutoResearcher&logo=discord&style=flat-square)](https://discord.gg/PnQDR5h9)
+
 AutoResearcher is an open-source project that uses GPT-based AI models to automatically generate academic literature reviews based on a given research question. The script fetches top papers from the Semantic Scholar API, extracts relevant information, and combines the findings into a concise literature review.
 
 The project is a very early prototype and is still under development. The vision is to create a tool that can conduct actual scientific discovery on autopilot.
