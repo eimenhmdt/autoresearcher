@@ -151,7 +151,6 @@ print(colored("Auto Researcher initiated!", "yellow"))
 print(colored("Generating keyword combinations...", "yellow"))
 keyword_combinations = generate_keyword_combinations(research_question)
 print(colored("Keyword combinations generated!", "green"))
-print(keyword_combinations)
 
 # Fetch the top 20 papers for the research question
 search_query = research_question
