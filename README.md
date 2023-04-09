@@ -2,6 +2,8 @@
 
 AutoResearcher is an open-source project that uses GPT-based AI models to automatically generate academic literature reviews based on a given research question. The script fetches top papers from the Semantic Scholar API, extracts relevant information, and combines the findings into a concise literature review.
 
+The project is a very early prototype and is still under development. The vision is to create a tool that can conduct actual scientific discovery on autopilot.
+
 ## Installation
 
 1. Clone the repository:
@@ -56,7 +58,7 @@ The script will fetch the top papers, extract answers and study qualities, and g
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or create pull requests.
+Contributions are welcome! Please feel free to submit issues or create pull requests. Let's take upgrade science together! 🚀
 
 ## License
 
