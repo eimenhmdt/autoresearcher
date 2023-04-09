@@ -1,6 +1,6 @@
 # AutoResearcher
 
-[![Discord](https://img.shields.io/discord/123456789012345678?label=AutoResearcher&logo=discord&style=flat-square)](https://discord.gg/PnQDR5h9)
+[![Discord](https://img.shields.io/discord/1094636825647267910?label=AutoResearcher&logo=discord&style=flat-square)](https://discord.gg/PnQDR5h9)
 
 AutoResearcher is an open-source project that uses GPT-based AI models to automatically generate academic literature reviews based on a given research question. The script fetches top papers from the Semantic Scholar API, extracts relevant information, and combines the findings into a concise literature review.
 
@@ -54,6 +54,7 @@ Replace <your_research_question> with your desired research question.
 ```bash
 python auto_researcher.py "<your_research_question>"
 ```
+
 Replace <your_research_question> with your desired research question. If no argument is provided, the script will use the default research question.
 
 The script will fetch the top papers, extract answers, and generate a literature review.
