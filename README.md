@@ -39,14 +39,13 @@ Replace <your_openai_api_key> with your actual API key from OpenAI.
 
 ## Usage
 
-1. Open the main.py file and set your research question and Semantic Scholar API key at the bottom of the script:
+1. Open the main.py file and set your research question at the bottom of the script:
 
 ```python
-api_key = "<your_semantic_scholar_api_key>"
 research_question = "<your_research_question>"
 ```
 
-Replace <your_semantic_scholar_api_key> with your actual API key from Semantic Scholar and <your_research_question> with your desired research question.
+Replace <your_research_question> with your desired research question.
 
 2. Run the script:
 
