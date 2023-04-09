@@ -49,13 +49,14 @@ research_question = "<your_research_question>"
 
 Replace <your_research_question> with your desired research question.
 
-2. Run the script:
+2. Run the script with your research question as a command-line argument:
 
 ```bash
-python main.py
+python auto_researcher.py "<your_research_question>"
 ```
+Replace <your_research_question> with your desired research question. If no argument is provided, the script will use the default research question.
 
-The script will fetch the top papers, extract answers and study qualities, and generate a literature review.
+The script will fetch the top papers, extract answers, and generate a literature review.
 
 ## Contributing
 
