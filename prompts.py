@@ -22,7 +22,7 @@ Now, using the concepts above, create a literature review for this research ques
 """
 
 
-extract_answer_prompt = """"
+extract_answer_prompt = """
 `reset`
 `no quotes`
 `no explanations`
@@ -32,12 +32,10 @@ extract_answer_prompt = """"
 `no filler`
 `just answer`
 
-I will give you the abstract of an academic paper. Extract the answer to this research question: {research_question} from the abstract. 
+I will give you the abstract of an academic paper. Extract the answer to this research question: {research_question} from the abstract.
 
-Also assess the study quality of the paper based on its abstract. Consider the following factors: study design, sample size, data collection methods, and statistical analysis techniques.
-
-If the answer is not in the abstract then you are only allowed to respond with 'No answer found'.
+If the answer is not in the abstract, then you are only allowed to respond with 'No answer found'.
 
 This is the abstract: {abstract}
-
 """
+
