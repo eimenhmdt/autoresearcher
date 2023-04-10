@@ -41,33 +41,29 @@ Replace <your_openai_api_key> with your actual API key from OpenAI.
 
 ## Usage
 
-1. Open the main.py file and set your research question at the bottom of the script:
-
-```python
-default_question = "<your_research_question>"
-```
-
-Replace <your_research_question> with your desired research question.
-
-2. Run the script with your research question as a command-line argument:
+Run the script with your research question as a command-line argument:
 
 ```bash
-python main.py "<your_research_question>"
+python main.py -q "<your_research_question>"
 ```
 
-Replace <your_research_question> with your desired research question. If no argument is provided, the script will use the default research question.
+Replace <your_research_question> with your desired research question. Providing a research question is mandatory; otherwise, the script will show an error message and exit.
 
 The script will fetch the top papers, extract answers, and generate a literature review.
 
-If you would like to output the literature review to a text file, you can pass it an optional command-line instruction to do so
+### Optional: Output Literature Review to a Text File
+
+If you would like to save the literature review to a text file, you can pass an optional command-line flag -o followed by the output file name:
 
 ```bash
-python main.py -o literature-review.txt
+python main.py -q "<your_research_question>" -o literature-review.txt
 ```
+
+This command will save the generated literature review to the specified file, in this case, literature-review.txt.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or create pull requests. Let's take upgrade science together! 🚀
+Contributions are welcome! Please feel free to submit issues or create pull requests. Let's upgrade science together! 🚀
 
 ## License
 
