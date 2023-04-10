@@ -4,6 +4,7 @@ import requests
 import openai
 import os
 import argparse
+import sys
 from dotenv import load_dotenv
 from termcolor import colored
 from prompts import literature_review_prompt, extract_answer_prompt, keyword_combination_prompt
@@ -27,7 +28,6 @@ def auto_researcher(research_question, output_file=None):
         combinations = response.split("\n")
         # Extract keyword combinations and handle cases where there's no colon
         return [combination.split(": ")[1] for combination in combinations if ": " in combination]
-
 
     # Fetch papers from Semantic Scholar API
     def fetch_papers(search_query, limit=100, year_range=None):
@@ -143,6 +143,8 @@ def auto_researcher(research_question, output_file=None):
                 citation = answer[citation_start + len("SOURCE: "):]
                 citations.append(citation)
         return citations
+    
+    
 
     print(colored(f"Research question: {research_question}", "yellow", attrs=["bold", "blink"]))
     print(colored("Auto Researcher initiated!", "yellow"))
@@ -180,16 +182,24 @@ def auto_researcher(research_question, output_file=None):
     # Print the academic literature review
     print(colored("Academic Literature Review:", "cyan"), literature_review, "\n")
 
+    # Save the literature review to a file if the output_file argument is provided
+    if output_file:
+        with open(output_file, 'w') as f:
+            f.write(literature_review)
+        print(colored(f"Literature review saved to {output_file}", "green"))
+
+
     return literature_review
 
 if __name__ == "__main__":
-    import sys
+
     parser = argparse.ArgumentParser(description="Auto Researcher")
     parser.add_argument("-o", "--output", dest="output_file", help="File to save the literature review", default=None)
-    parser.add_argument("-q", "--question", dest="research_question", help="The research question you want to investigate", default=None)
+    parser.add_argument("-q", "--question", dest="research_question", help="The research question you want to investigate")
     args = parser.parse_args()
-    
-    default_question = "How to make good Espresso?"
-    research_question = args.research_question if args.research_question else default_question
 
-    auto_researcher(research_question, args.output_file)
+    if args.research_question is None:
+        print(colored("Error: Please provide a research question using the -q or --question option.", "red"))
+        sys.exit(1)
+
+    auto_researcher(args.research_question, args.output_file)
