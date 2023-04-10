@@ -3,11 +3,12 @@
 import requests
 import openai
 import os
+import argparse
 from dotenv import load_dotenv
 from termcolor import colored
 from prompts import literature_review_prompt, extract_answer_prompt, keyword_combination_prompt
 
-def auto_researcher(research_question):
+def auto_researcher(research_question, output_file=None):
     load_dotenv()
 
     # Set API Keys
@@ -183,10 +184,12 @@ def auto_researcher(research_question):
 
 if __name__ == "__main__":
     import sys
+    parser = argparse.ArgumentParser(description="Auto Researcher")
+    parser.add_argument("-o", "--output", dest="output_file", help="File to save the literature review", default=None)
+    parser.add_argument("-q", "--question", dest="research_question", help="The research question you want to investigate", default=None)
+    args = parser.parse_args()
+    
+    default_question = "How to make good Espresso?"
+    research_question = args.research_question if args.research_question else default_question
 
-    if len(sys.argv) > 1:
-        research_question = sys.argv[1]
-    else:
-        research_question = "How to make good Espresso?"
-
-    auto_researcher(research_question)
+    auto_researcher(research_question, args.output_file)
