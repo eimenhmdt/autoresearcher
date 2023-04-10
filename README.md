@@ -44,7 +44,7 @@ Replace <your_openai_api_key> with your actual API key from OpenAI.
 1. Open the main.py file and set your research question at the bottom of the script:
 
 ```python
-research_question = "<your_research_question>"
+default_question = "<your_research_question>"
 ```
 
 Replace <your_research_question> with your desired research question.
@@ -58,6 +58,12 @@ python main.py "<your_research_question>"
 Replace <your_research_question> with your desired research question. If no argument is provided, the script will use the default research question.
 
 The script will fetch the top papers, extract answers, and generate a literature review.
+
+If you would like to output the literature review to a text file, you can pass it an optional command-line instruction to do so
+
+```bash
+python main.py -o literature-review.txt
+```
 
 ## Contributing
 
