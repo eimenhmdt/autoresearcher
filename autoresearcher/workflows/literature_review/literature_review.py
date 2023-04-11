@@ -5,7 +5,7 @@ from autoresearcher.utils.get_citations import get_citation_by_doi
 from autoresearcher.utils.prompts import literature_review_prompt, extract_answer_prompt, keyword_combination_prompt
 from autoresearcher.data_sources.web_apis.semantic_scholar_loader import SemanticScholarLoader
 
-def literature_review(research_question):
+def literature_review(research_question, output_file=None):
 
     SemanticScholar = SemanticScholarLoader()
 
@@ -97,14 +97,24 @@ def literature_review(research_question):
     # Print the academic literature review
     print(colored("Academic Literature Review:", "cyan"), literature_review, "\n")
 
+    # Save the literature review to a file if the output_file argument is provided
+    if output_file:
+        with open(output_file, 'w') as f:
+            f.write(literature_review)
+        print(colored(f"Literature review saved to {output_file}", "green"))
+
     return literature_review
 
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
         research_question = sys.argv[1]
+        output_file = sys.argv[2]
+    elif len(sys.argv) > 1:
+        research_question = sys.argv[1]
+        output_file = None
     else:
         raise ValueError("No research question provided.")
 
-    literature_review(research_question)
+    literature_review(research_question, output_file)
