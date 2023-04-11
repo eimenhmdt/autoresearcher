@@ -76,19 +76,9 @@ researcher()
 
 This will generate a literature review based on the research question.
 
-### Optional: Output Literature Review to a Text File
-
-If you would like to save the literature review to a text file, you can pass an optional command-line flag -o followed by the output file name:
-
-```bash
-python main.py -q "<your_research_question>" -o literature-review.txt
-```
-
-This command will save the generated literature review to the specified file, in this case, literature-review.txt.
-
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or create pull requests. Let's upgrade science together! 🚀
+Contributions are welcome! Please feel free to submit issues or create pull requests. Let's take upgrade science together! 🚀
 
 ## License
 
