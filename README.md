@@ -2,7 +2,7 @@
 
 ---
 
-⚡ Automating scientic workflows with AI ⚡
+⚡ Automating scientific workflows with AI ⚡
 
 [![Discord](https://img.shields.io/discord/1094636825647267910?label=AutoResearcher&logo=discord&style=flat-square)](https://discord.gg/PnQDR5h9)
 
