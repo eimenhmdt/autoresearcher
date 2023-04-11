@@ -62,6 +62,12 @@ research_question = "What is the best way to train a neural network?"
 researcher = literature_review(research_question)
 ```
 
+You can also pass an output file name as a .txt file:
+
+```python
+researcher = literature_review(research_question, output_file="my_literature_review.txt")
+```
+
 4. Execute the researcher instance to fetch and analyze relevant papers:
 
 ```python
