@@ -35,10 +35,6 @@ class SemanticScholarLoader(BaseWebAPIDataLoader):
 
         sorted_papers = sorted(papers, key=lambda x: x['combined_score'], reverse=True)
 
-        print("Top 20 papers:") 
-        for paper in sorted_papers[:top_n]:
-            print(paper['citationCount'], paper['title'], f"Combined Score: {paper['combined_score']:.2f}")
-
         return sorted_papers[:top_n]
     
     
