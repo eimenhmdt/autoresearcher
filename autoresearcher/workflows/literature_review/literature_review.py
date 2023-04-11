@@ -1,25 +1,13 @@
 #!/usr/bin/env python3
-
-import requests
-import openai
-import os
-import argparse
-import sys
-from dotenv import load_dotenv
 from termcolor import colored
-from prompts import literature_review_prompt, extract_answer_prompt, keyword_combination_prompt
+from autoresearcher.llms.openai import openai_call
+from autoresearcher.utils.get_citations import get_citation_by_doi
+from autoresearcher.utils.prompts import literature_review_prompt, extract_answer_prompt, keyword_combination_prompt
+from autoresearcher.data_sources.web_apis.semantic_scholar_loader import SemanticScholarLoader
 
-def auto_researcher(research_question, output_file=None):
-    load_dotenv()
+def literature_review(research_question, output_file=None):
 
-    # Set API Keys
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-    EMAIL = os.getenv("EMAIL", "")
-    assert OPENAI_API_KEY, "OPENAI_API_KEY environment variable is missing from .env"
-    assert EMAIL, "EMAIL environment variable is missing from .env"
-
-    # Configure OpenAI
-    openai.api_key = OPENAI_API_KEY
+    SemanticScholar = SemanticScholarLoader()
 
     # Generate keyword combinations for a given research question
     def generate_keyword_combinations(research_question):
@@ -28,70 +16,6 @@ def auto_researcher(research_question, output_file=None):
         combinations = response.split("\n")
         # Extract keyword combinations and handle cases where there's no colon
         return [combination.split(": ")[1] for combination in combinations if ": " in combination]
-
-    # Fetch papers from Semantic Scholar API
-    def fetch_papers(search_query, limit=100, year_range=None):
-        base_url = "https://api.semanticscholar.org/graph/v1/paper/search"
-        params = {
-            "query": search_query,
-            "limit": limit,
-            "fields": "title,url,abstract,authors,citationStyles,journal,citationCount,year,externalIds"
-        }
-
-        if year_range is not None:
-            params["year"] = year_range
-
-        response = requests.get(base_url, params=params)
-
-        if response.status_code == 200:
-            data = response.json()
-            return data.get('data', [])
-        else:
-            raise Exception(f"Failed to fetch data from Semantic Scholar API: {response.status_code}")
-
-
-    # Fetch and sort papers by citation count
-    # If you don't want to limit the year range, set year_range to None
-    def fetch_and_sort_papers(search_query, limit=100, top_n=20, year_range="2010-2023", keyword_combinations=None):
-        papers = []
-        if keyword_combinations is None:
-            keyword_combinations = [search_query]
-
-        for combination in keyword_combinations:
-            papers.extend(fetch_papers(combination, limit, year_range))
-
-        sorted_papers = sorted(papers, key=lambda x: x['citationCount'], reverse=True)
-        return sorted_papers[:top_n]
-
-
-    # Call OpenAI API with a given prompt (GPT-3.5 turbo or GPT-4)
-    def openai_call(prompt: str, use_gpt4: bool = False, temperature: float = 0.5, max_tokens: int = 100):
-        if not use_gpt4:
-            #Call GPT-3.5 turbo model
-            messages=[{"role": "user", "content": prompt}]
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                top_p=1,
-                frequency_penalty=0,
-                presence_penalty=0
-            )
-            return response.choices[0].message.content.strip()
-        else:
-            #Call GPT-4 chat model
-            messages=[{"role": "user", "content": prompt}]
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
-                messages = messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                n=1,
-                stop=None,
-            )
-            return response.choices[0].message.content.strip()
-
 
     # Extract answers from papers using OpenAI API
     def extract_answers_from_papers(papers, research_question, use_gpt4=False, temperature=0.1, max_tokens=150):
@@ -118,13 +42,6 @@ def auto_researcher(research_question, output_file=None):
                 print(colored(f"{answer_with_citation}", "cyan"))
 
         return answers
-
-    # Get APA citation for a paper using DOI
-    def get_citation_by_doi(doi):
-        url = f"https://api.citeas.org/product/{doi}?email={EMAIL}"
-        response = requests.get(url)
-        data = response.json()
-        return data["citations"][0]["citation"]
 
     # Combine answers into a concise literature review using OpenAI API
     def combine_answers(answers, research_question, use_gpt4=False, temperature=0.1, max_tokens=1800):
@@ -157,7 +74,7 @@ def auto_researcher(research_question, output_file=None):
     # Fetch the top 20 papers for the research question
     search_query = research_question
     print(colored("Fetching top 20 papers...", "yellow"))
-    top_papers = fetch_and_sort_papers(search_query, keyword_combinations=keyword_combinations)
+    top_papers = SemanticScholar.fetch_and_sort_papers(search_query, keyword_combinations=keyword_combinations, year_range="2000-2023")
     print(colored("Top 20 papers fetched!", "green"))
 
     # Extract answers and from the top 20 papers
@@ -188,18 +105,18 @@ def auto_researcher(research_question, output_file=None):
             f.write(literature_review)
         print(colored(f"Literature review saved to {output_file}", "green"))
 
-
     return literature_review
 
 if __name__ == "__main__":
+    import sys
+    
+    if len(sys.argv) > 2:
+        research_question = sys.argv[1]
+        output_file = sys.argv[2]
+    elif len(sys.argv) > 1:
+        research_question = sys.argv[1]
+        output_file = None
+    else:
+        raise ValueError("No research question provided.")
 
-    parser = argparse.ArgumentParser(description="Auto Researcher")
-    parser.add_argument("-o", "--output", dest="output_file", help="File to save the literature review", default=None)
-    parser.add_argument("-q", "--question", dest="research_question", help="The research question you want to investigate")
-    args = parser.parse_args()
-
-    if args.research_question is None:
-        print(colored("Error: Please provide a research question using the -q or --question option.", "red"))
-        sys.exit(1)
-
-    auto_researcher(args.research_question, args.output_file)
+    literature_review(research_question, output_file)

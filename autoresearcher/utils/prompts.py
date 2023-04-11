@@ -53,8 +53,6 @@ Generate several keyword combinations based on the following research question: 
 Don't generate more than 5 keyword combinations.
 
 The output should be structured like this:
-Write "KeywordCombination:" and then list the keywords like so "Keyword Keyword Keyword"
-
-Important note: Don't add commas between the keywords. Only add spaces.
+Write "KeywordCombination:" and then list the keywords like so "Keyword,Keyword,Keyword"
 
 """

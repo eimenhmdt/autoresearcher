@@ -1,55 +1,80 @@
-# AutoResearcher
+# 🤖🧪 AutoResearcher
+
+---
+
+⚡ Automating scientic workflows with AI ⚡
 
 [![Discord](https://img.shields.io/discord/1094636825647267910?label=AutoResearcher&logo=discord&style=flat-square)](https://discord.gg/PnQDR5h9)
 
-AutoResearcher is an open-source project that uses GPT-based AI models to automatically generate academic literature reviews based on a given research question. The script fetches top papers from the Semantic Scholar API, extracts relevant information, and combines the findings into a concise literature review.
+---
 
-The project is a very early prototype and is still under development. The vision is to create a tool that can conduct actual scientific discovery on autopilot.
+## What is AutoResearcher?
+
+AutoResearcher is an open-source Python package that combines AI models and external knowledge sources to automate scientific workflows. It is designed to help researchers and scientists to speed up their research process and to make it more efficient.
+
+The project is a very early prototype and is still under development. Currently, it is limited to conducting literature reviews. The vision, however, is to create a tool that can conduct actual scientific discovery on autopilot.
+
+If this vision excites you, please consider contributing to the project. You can start by joining the [Discord server](https://discord.gg/PnQDR5h9) and discussing your ideas with the community.
 
 ## Installation
 
-1. Clone the repository:
+Install the package using pip:
 
 ```bash
-git clone https://github.com/eimenhmdt/autoresearcher.git
+pip install autoresearcher
 ```
 
-2. Create a virtual environment and activate it:
+## Setting Environment Variables
 
-```bash
-cd autoresearcher
-python3 -m venv venv
-source venv/bin/activate
+Before using the package, you need to set the following environment variables:
+
+- `OPENAI_API_KEY`: Your OpenAI API key for accessing the GPT-based AI models.
+- `EMAIL`: An email address of your choice (used to identify your API requests for getting citations).
+
+You can set the environment variables in your operating system or in your Python script using the `os` module:
+
+```python
+import os
+
+os.environ["OPENAI_API_KEY"] = "<your_openai_api_key>"
+os.environ["EMAIL"] = "<your_email>"
 ```
 
-On Windows, use `venv\Scripts\activate` instead of `source venv/bin/activate`.
-
-3. Install the required Python packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Create a .env file in the project directory and add your OpenAI API key and an email of your choice (used to identify your API requests for getting citations):
-
-```bash
-OPENAI_API_KEY=<your_openai_api_key>
-EMAIL=<your_email>
-```
-
-Replace <your_openai_api_key> with your actual API key from OpenAI.
+Replace <your_openai_api_key> and <your_email> with your actual API key and email address.
 
 ## Usage
 
-Run the script with your research question as a command-line argument:
+1. Import the literature_review function from the package:
 
-```bash
-python main.py -q "<your_research_question>"
+```python
+from autoresearcher import literature_review
 ```
 
-Replace <your_research_question> with your desired research question. Providing a research question is mandatory; otherwise, the script will show an error message and exit.
+2. Set your research question as a string:
 
-The script will fetch the top papers, extract answers, and generate a literature review.
+```python
+research_question = "What is the best way to train a neural network?"
+```
+
+3. Create a literature_review instance with your research question:
+
+```python
+researcher = literature_review(research_question)
+```
+
+You can also pass an output file name as a .txt file:
+
+```python
+researcher = literature_review(research_question, output_file="my_literature_review.txt")
+```
+
+4. Execute the researcher instance to fetch and analyze relevant papers:
+
+```python
+researcher()
+```
+
+This will generate a literature review based on the research question.
 
 ### Optional: Output Literature Review to a Text File
 
@@ -69,4 +94,4 @@ Contributions are welcome! Please feel free to submit issues or create pull requ
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Made with coffee by [@eimenhamedat](https://twitter.com/eimenhmdt)
+Made with ☕ by [@eimenhamedat](https://twitter.com/eimenhmdt)
