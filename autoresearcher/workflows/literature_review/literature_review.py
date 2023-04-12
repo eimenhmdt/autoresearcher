@@ -117,6 +117,6 @@ if __name__ == "__main__":
         research_question = sys.argv[1]
         output_file = None
     else:
-        raise ValueError("No research question provided.")
+        raise ValueError("No research question provided. Usage: python literature_review.py 'My research question' 'optional_output_file.txt'")
 
     literature_review(research_question, output_file)

@@ -1,0 +1,4 @@
+asyncio
+fastapi[all]
+pydantic
+autoresearcher
