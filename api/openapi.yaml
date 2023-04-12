@@ -1,0 +1,92 @@
+openapi: 3.0.2
+info:
+  title: Autoresearcher API
+  version: 1.0.0
+  description: An API that helps users perform research tasks like literature reviews, summarize papers and find citations.
+servers:
+  - url: PLUGIN_HOSTNAME
+    description: To be replaced when served
+  - url: https://restfox.dev/
+    description: Testing server
+  - url: https://example.com/
+    description: Production server
+paths:
+  /:
+    post:
+      tags:
+        - Literature Review
+      operationId: litreviewPostRequest
+      summary: Retrieve literature review results
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionModel"
+      responses:
+        200:
+          description: Literature review results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LitreviewResponse"
+        default:
+          description: Error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /q/{q}:
+    get:
+      tags:
+        - Literature Review
+      operationId: litreviewGetRequest
+      summary: Retrieve literature review results
+      parameters:
+        - name: q
+          in: path
+          description: The research question to perform the literature review for
+          required: true
+          schema:
+            type: string
+            example: What is the current state of the art in deep learning?
+      responses:
+        200:
+          description: Literature review results
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The literature review results for the given research question
+        default:
+          description: Error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    QuestionModel:
+      type: object
+      properties:
+        research_question:
+          type: string
+          description: The research question to perform the literature review for
+          example: What is the current state of the art in deep learning?
+    LitreviewResponse:
+      type: object
+      properties:
+        researcher:
+          type: string
+          description: The literature review results for the given research question
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
