@@ -26,6 +26,7 @@ setup(
         "requests==2.26.0",
         "termcolor==1.1.0",
         "jellyfish==0.11.2",
+        "tiktoken==0.3.3",
         "setuptools>=42",
         "wheel"
     ],
