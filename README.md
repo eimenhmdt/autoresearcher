@@ -4,7 +4,7 @@
 
 ⚡ Automating scientific workflows with AI ⚡
 
-<a href="https://github.com/eimenhmdt/autoresearcher/">![GitHub Repo stars](https://img.shields.io/github/stars/LAION-AI/Open-Assistant?style=social)</a>
+<a href="https://github.com/eimenhmdt/autoresearcher/">![GitHub Repo stars](https://img.shields.io/github/stars/eimenhmdt/autoresearcher?style=social)</a>
 [![Discord](https://img.shields.io/discord/1094636825647267910?label=AutoResearcher&logo=discord&style=flat-square)](https://discord.gg/PnQDR5h9)
 
 ---
