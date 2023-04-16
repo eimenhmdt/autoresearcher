@@ -35,6 +35,8 @@ class SemanticScholarLoader(BaseWebAPIDataLoader):
 
         sorted_papers = sorted(papers, key=lambda x: x['combined_score'], reverse=True)
 
-        return sorted_papers[:top_n]
-    
+        # deduplicate paper entries prior to taking top n results
+        sorted_dedup_papers = list({ each_paper['paperId'] : each_paper for each_paper in sorted_papers }.values())
+
+        return sorted_dedup_papers[:top_n]    
     
