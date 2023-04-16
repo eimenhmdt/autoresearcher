@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="autoresearcher",
-    version="0.0.5",
+    version="0.0.6",
     author="Eimen Hamedat",
     author_email="eimen.hamedat@gmail.com",
     description="Automating scientic workflows with AI",
