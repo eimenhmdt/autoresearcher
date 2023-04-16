@@ -56,7 +56,7 @@ from autoresearcher import literature_review
 research_question = "What is the best way to train a neural network?"
 ```
 
-3. Create a literature_review instance with your research question:
+3. Create a literature_review instance with your research question and execute it:
 
 ```python
 researcher = literature_review(research_question)
@@ -66,12 +66,6 @@ You can also pass an output file name as a .txt file:
 
 ```python
 researcher = literature_review(research_question, output_file="my_literature_review.txt")
-```
-
-4. Execute the researcher instance to fetch and analyze relevant papers:
-
-```python
-researcher()
 ```
 
 This will generate a literature review based on the research question.
