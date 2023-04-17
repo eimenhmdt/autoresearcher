@@ -1,0 +1,26 @@
+
+site_name: autoresearcher
+repo_url: https://github.com/eimenhmdt/autoresearcher
+
+theme:
+  name: "material"
+  homepage: https://github.com/eimenhmdt/autoresearcher
+  # logo: assets/logo.png
+  # favicon: images/favicon.png
+  palette: 
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+  features:
+    - toc.follow
+    - content.action.edit
+
+plugins:
+- search
+- mkdocstrings
