@@ -73,7 +73,7 @@ This will generate a literature review based on the research question.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or create pull requests. Let's take upgrade science together! 🚀
+We welcome contributions! Feel free to submit issues or create pull requests. Together, let's revolutionize science! 🚀
 
 ## License
 
