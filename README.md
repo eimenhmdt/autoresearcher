@@ -17,6 +17,10 @@ Please note that the project is currently in its early prototype stage and under
 
 If this vision excites you, we invite you to contribute to the project. Start by joining our [Discord server](https://discord.gg/PnQDR5h9) and discussing your ideas with our community.
 
+## Documentation
+
+Documentation for the package is available [here](https://eimenhmdt.github.io/autoresearcher/).
+
 ## Installation
 
 Install the package using pip:
