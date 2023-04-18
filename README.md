@@ -75,6 +75,11 @@ researcher = literature_review(research_question, output_file="my_literature_rev
 
 This will generate a literature review based on the research question.
 
+Also, you can run it in one command:
+```python
+python run_autorsearcher.py --research_question "<your_research_question>" --output_file "<your_output_file>"
+```
+
 ## Contributing
 
 We welcome contributions! Feel free to submit issues or create pull requests. Together, let's revolutionize science! 🚀
