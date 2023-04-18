@@ -27,6 +27,9 @@ setup(
         "termcolor==1.1.0",
         "jellyfish==0.11.2",
         "tiktoken==0.3.3",
+        "faiss-cpu==1.7.3",
+        "PyMuPDF==1.22.0",
+        "langchain>=0.0.141",
         "setuptools>=42",
         "wheel"
     ],
