@@ -15,7 +15,7 @@ AutoResearcher is an open-source Python package that leverages AI models and ext
 
 Please note that the project is currently in its early prototype stage and under active development. Its present functionality is limited to conducting literature reviews, but the ultimate goal is to create a tool capable of driving scientific discovery on autopilot.
 
-If this vision excites you, we invite you to contribute to the project. Start by joining our [Discord server](https://discord.gg/PnQDR5h9) and discussing your ideas with our community.
+If this vision excites you, we invite you to contribute to the project. Start by joining our [Discord server](https://discord.gg/jUMfu4D4je) and discussing your ideas with our community.
 
 ## Documentation
 
