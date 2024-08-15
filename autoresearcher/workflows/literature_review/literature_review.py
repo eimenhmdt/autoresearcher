@@ -16,12 +16,13 @@ from autoresearcher.data_sources.web_apis.semantic_scholar_loader import (
 )
 
 
-def literature_review(research_question, output_file=None):
+def literature_review(research_question, output_file=None, use_gpt4=False):
     """
     Generates an academic literature review for a given research question.
     Args:
       research_question (str): The research question to generate a literature review for.
       output_file (str, optional): The file path to save the literature review to.
+      use_gpt4 (bool, optional): Whether to use GPT-4 for generating the literature review. Defaults to False.
     Returns:
       str: The generated literature review.
     Examples:
@@ -65,12 +66,12 @@ def literature_review(research_question, output_file=None):
 
     # Extract answers and from the top 20 papers
     print(colored("Extracting research findings from papers...", "yellow"))
-    answers = extract_answers_from_papers(top_papers, research_question)
+    answers = extract_answers_from_papers(top_papers, research_question, use_gpt4=use_gpt4)
     print(colored("Research findings extracted!", "green"))
 
     # Combine answers into a concise academic literature review
     print(colored("Synthesizing answers...", "yellow"))
-    literature_review = combine_answers(answers, research_question)
+    literature_review = combine_answers(answers, research_question, use_gpt4=use_gpt4)
     print(colored("Literature review generated!", "green"))
 
     # Extract citations from answers and append a references list to the literature review
