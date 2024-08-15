@@ -76,9 +76,18 @@ researcher = literature_review(research_question, output_file="my_literature_rev
 This will generate a literature review based on the research question.
 
 Also, you can run it in one command:
+
 ```python
 python run_autorsearcher.py --research_question "<your_research_question>" --output_file "<your_output_file>"
 ```
+
+4. To use GPT-4o instead of the default GPT-4o-mini, set the `use_gpt4` parameter to `True`:
+
+```python
+researcher = literature_review(research_question, use_gpt4=True)
+```
+
+Note that using GPT-4o may result in higher costs and potentially longer processing times.
 
 ## Contributing
 
