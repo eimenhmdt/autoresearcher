@@ -18,7 +18,7 @@ def openai_call(
     Calls OpenAI API to generate a response to a given prompt.
     Args:
       prompt (str): The prompt to generate a response to.
-      use_gpt4 (bool, optional): Whether to use GPT-4 or GPT-3.5. Defaults to False.
+      use_gpt4 (bool, optional): Whether to use GPT-4o-mini or GPT-4o. Defaults to False.
       temperature (float, optional): The temperature of the response. Defaults to 0.5.
       max_tokens (int, optional): The maximum number of tokens to generate. Defaults to 100.
     Returns:
@@ -30,10 +30,10 @@ def openai_call(
       The OpenAI API key must be set in the environment variable OPENAI_API_KEY.
     """
     if not use_gpt4:
-        # Call GPT-3.5 turbo model
+        # Call GPT-4o-mini model
         messages = [{"role": "user", "content": prompt}]
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=messages,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -43,10 +43,10 @@ def openai_call(
         )
         return response.choices[0].message.content.strip()
     else:
-        # Call GPT-4 chat model
+        # Call GPT-4o model
         messages = [{"role": "user", "content": prompt}]
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=messages,
             temperature=temperature,
             max_tokens=max_tokens,
