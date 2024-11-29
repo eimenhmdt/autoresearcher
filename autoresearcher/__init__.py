@@ -1,1 +1,2 @@
 from .workflows.literature_review.literature_review import literature_review
+from .workflows.paper_analysis.analyze_paper import analyze_paper
